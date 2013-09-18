@@ -22,6 +22,9 @@ public class PermissionFactory {
         } else if (pl.equalsIgnoreCase("groupmanager")) {
             plugin = new EssentialsGroupManager();
             name = pl;
+        } else if (pl.equalsIgnoreCase("vault")) {
+            plugin = new Vault();
+            name = pl;
         } else {
             plugin = new noPermPlugin();
             name = "No Permissions plugin found!";

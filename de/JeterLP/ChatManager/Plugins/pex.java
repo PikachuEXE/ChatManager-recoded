@@ -20,28 +20,8 @@ public class pex implements PermissionsPlugin {
     }
 
     @Override
-    public String getPrefix(String player, String world) {
-        PermissionUser user = PermissionsEx.getPermissionManager().getUser(player);
-        if (user != null) {
-            return user.getPrefix(world);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
     public String getSuffix(Player p, String world) {
         PermissionUser user = PermissionsEx.getPermissionManager().getUser(p.getName());
-        if (user != null) {
-            return user.getSuffix(world);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public String getSuffix(String player, String world) {
-        PermissionUser user = PermissionsEx.getPermissionManager().getUser(player);
         if (user != null) {
             return user.getSuffix(world);
         } else {
@@ -54,8 +34,4 @@ public class pex implements PermissionsPlugin {
         return PermissionsEx.getPermissionManager().getUser(p).getGroupsNames();
     }
 
-    @Override
-    public String[] getGroups(String player, String world) {
-        return PermissionsEx.getPermissionManager().getUser(player).getGroupsNames();
-    }
 }
