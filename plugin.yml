@@ -1,6 +1,6 @@
-name: ChatManager-recoded
+name: ChatEx
 main: de.JeterLP.ChatManager.ChatManager
 version: 1.0.0
 author: TheJeterLP
 description: Chat management plugin
-softdepend: [PermissionsEx,bpermissions,GroupManager,Vault,AdminCmd]
+softdepend: [PermissionsEx,bpermissions,GroupManager,Vault,AdminCmd,Factions]

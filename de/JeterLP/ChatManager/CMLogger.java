@@ -12,7 +12,7 @@ public class CMLogger {
     private static final Logger logger = Bukkit.getLogger();
     
     public static void log(Level level, String message) {
-        String prefix = "[ChatManager - recoded] ";
+        String prefix = "[ChatEx] ";
         message = prefix + message;
         logger.log(level, message);
     }

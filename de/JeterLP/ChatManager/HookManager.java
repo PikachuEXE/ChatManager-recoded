@@ -39,4 +39,12 @@ public class HookManager {
         }
         return true;
     }
+    
+    public boolean checkFactions() {
+        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("Factions");
+        if (plugin == null) {
+            return false;
+        }
+        return true;
+    }
 }

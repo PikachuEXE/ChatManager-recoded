@@ -62,7 +62,8 @@ public class EssentialsGroupManager implements PermissionsPlugin {
             handler = groupManager.getWorldsHolder().getWorldPermissions(world);
         }
         if (handler == null) {
-            return null;
+            String[] data = {""};
+            return data;
         }
         return handler.getGroups(p.getName());
     }

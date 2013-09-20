@@ -11,27 +11,32 @@ public class pex implements PermissionsPlugin {
 
     @Override
     public String getPrefix(Player p, String world) {
-        PermissionUser user = PermissionsEx.getPermissionManager().getUser(p.getName());
+        final PermissionUser user = PermissionsEx.getPermissionManager().getUser(p.getName());
         if (user != null) {
             return user.getPrefix(world);
         } else {
-            return null;
+            return "";
         }
     }
 
     @Override
     public String getSuffix(Player p, String world) {
-        PermissionUser user = PermissionsEx.getPermissionManager().getUser(p.getName());
+        final PermissionUser user = PermissionsEx.getPermissionManager().getUser(p.getName());
         if (user != null) {
             return user.getSuffix(world);
         } else {
-            return null;
+            return "";
         }
     }
 
     @Override
     public String[] getGroups(Player p, String world) {
-        return PermissionsEx.getPermissionManager().getUser(p).getGroupsNames();
+        final PermissionUser user = PermissionsEx.getPermissionManager().getUser(p.getName());
+        if (user != null) {
+            return user.getGroupsNames();
+        } else {
+            String[] data = {""};
+            return data;
+        }
     }
-
 }

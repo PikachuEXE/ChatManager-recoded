@@ -5,6 +5,7 @@ import de.JeterLP.ChatManager.Plugins.PermissionsPlugin;
 import java.io.File;
 import java.util.logging.Level;
 import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,6 +21,7 @@ public class ChatManager extends JavaPlugin {
     private HookManager hook = new HookManager();
     private static Chat chat = null;
     private static ChatManager instance;
+    private static Economy econ = null;
 
     @Override
     public void onEnable() {
@@ -29,7 +31,7 @@ public class ChatManager extends JavaPlugin {
         initializeConfiguration();
         if (!getConfig().getBoolean("enable")) {
             getServer().getPluginManager().disablePlugin(this);
-            CMLogger.log(Level.INFO, "ChatManager - recoded disabled, check config!");
+            CMLogger.log(Level.INFO, "disabled, check config!");
             return;
         }
         if (hook.checkPex()) {
@@ -44,6 +46,9 @@ public class ChatManager extends JavaPlugin {
         } else {
             PermissionFactory.setPlugin("no");
         }
+        if (hook.checkVault()) {
+            setupEconomy();
+        }
         CMLogger.log(Level.INFO, "Successfully hooked into: " + PermissionFactory.getName());
         listener = new ChatListener(config, this);
         getServer().getPluginManager().registerEvents(listener, this);
@@ -54,11 +59,11 @@ public class ChatManager extends JavaPlugin {
     @Override
     public void onDisable() {
         listener = null;
-        CMLogger.log(Level.INFO, "ChatManager disabled!");
+        CMLogger.log(Level.INFO, "is now disabled!");
     }
 
     private void initializeConfiguration() {
-        if (!new File("plugins/ChatManager-recoded/config.yml").exists()) {
+        if (!new File("plugins/ChatEx/config.yml").exists()) {
             getConfig().set("enable", true);
             getConfig().set("message-format", ChatListener.MESSAGE_FORMAT);
             getConfig().set("global-message-format", ChatListener.GLOBAL_MESSAGE_FORMAT);
@@ -84,15 +89,24 @@ public class ChatManager extends JavaPlugin {
         return chat;
     }
 
-    private Boolean setupChat() {
-        RegisteredServiceProvider chatProvider = getServer().getServicesManager().getRegistration(Chat.class);
-        if (chatProvider != null) {
-            chat = (Chat) chatProvider.getProvider();
-        }
-        if (chat != null) {
-            return Boolean.valueOf(true);
-        }
-        return Boolean.valueOf(false);
+    public HookManager getHook() {
+        return hook;
+    }
+
+    public Economy getEconomy() {
+        return econ;
+    }
+
+    private boolean setupChat() {
+        RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(Chat.class);
+        chat = chatProvider.getProvider();
+        return chat != null;
+    }
+
+    private boolean setupEconomy() {
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        econ = rsp.getProvider();
+        return econ != null;
     }
 
     public static ChatManager getInstance() {

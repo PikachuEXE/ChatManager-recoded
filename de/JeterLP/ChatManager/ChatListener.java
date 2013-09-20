@@ -3,6 +3,7 @@ package de.JeterLP.ChatManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -26,13 +27,8 @@ public class ChatListener implements Listener {
     protected String optionGlobalMessageFormat = "global-message-format";
     protected String optionRangedMode = "force-ranged-mode";
     protected String optionDisplayname = "display-name-format";
-    protected String permissionChatColor = "chatmanager.chat.color";
-    protected String permissionChatMagic = "chatmanager.chat.magic";
-    protected String permissionChatBold = "chatmanager.chat.bold";
-    protected String permissionChatStrikethrough = "chatmanager.chat.strikethrough";
-    protected String permissionChatUnderline = "chatmanager.chat.underline";
-    protected String permissionChatItalic = "chatmanager.chat.italic";
     private ChatManager main;
+    private String chatMessage;
 
     public ChatListener(FileConfiguration config, ChatManager main) {
         this.messageFormat = config.getString("message-format", this.messageFormat);
@@ -43,33 +39,42 @@ public class ChatListener implements Listener {
         this.main = main;
     }
 
-    @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlayerChat(final AsyncPlayerChatEvent event) {
         if (event.isCancelled()) {
             return;
         }
+        boolean localChat = this.rangedMode;
         Player player = event.getPlayer();
         String message = this.messageFormat;
-        boolean localChat = this.rangedMode;
-        String chatMessage = event.getMessage();
+        chatMessage = event.getMessage();
         if (localChat = true) {
-            if (chatMessage.startsWith("!") && player.hasPermission("chatmanager.chat.global")) {
+            if (chatMessage.startsWith("!") && player.hasPermission("chatex.chat.global")) {
                 chatMessage = chatMessage.replaceFirst("!", "");
-                message = this.globalMessageFormat;
+                message = main.getUtils().replaceColors(globalMessageFormat);
             }
         }
-        message = main.getUtils().translateColorCodes(message);
-        chatMessage = main.getUtils().translateColorCodes(chatMessage);
+        message = main.getUtils().replaceColors(message);
         message = message.replace("%message", "%2$s").replace("%displayname", "%1$s");
         message = main.getUtils().replacePlayerPlaceholders(player, message);
         message = main.getUtils().replaceTime(message);
 
         event.setFormat(message);
-        event.setMessage(chatMessage);
+
         if (localChat) {
             double range = this.chatRange;
             event.getRecipients().clear();
             event.getRecipients().addAll(main.getUtils().getLocalRecipients(player, message, range));
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerChatMessage(final AsyncPlayerChatEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+        Player player = event.getPlayer();     
+        chatMessage = main.getUtils().translateColorCodes(chatMessage, player);
+        event.setMessage(chatMessage);
     }
 }
