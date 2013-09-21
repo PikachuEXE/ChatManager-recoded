@@ -116,7 +116,7 @@ public class Utils {
         result = result.replace("%suffix", this.replaceColors(main.getPlugin().getSuffix(player, player.getWorld().getName())));
         
         result = result.replace("%world", this.getColoredWorldName(worldName)).replace("%player", player.getDisplayName());
-        result = result.replace("%group", this.replaceColors(main.getPlugin().getGroups(player, player.getWorld().getName())[0]));
+        result = result.replace("%group", this.replaceColors(main.getPlugin().getGroupNames(player, player.getWorld().getName())[0]));
 		
         return format;
     }

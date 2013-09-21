@@ -21,7 +21,7 @@ public class bPermissions implements PermissionsPlugin {
     }
 
     @Override
-    public String[] getGroups(Player p, String world) {
+    public String[] getGroupNames(Player p, String world) {
         return ApiLayer.getGroups(world, CalculableType.USER, p.getName());
     }
 }

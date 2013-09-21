@@ -30,7 +30,7 @@ public class pex implements PermissionsPlugin {
     }
 
     @Override
-    public String[] getGroups(Player p, String world) {
+    public String[] getGroupNames(Player p, String world) {
         final PermissionUser user = PermissionsEx.getPermissionManager().getUser(p.getName());
         if (user != null) {
             return user.getGroupsNames();
