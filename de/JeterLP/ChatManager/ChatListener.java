@@ -48,7 +48,7 @@ public class ChatListener implements Listener {
         Player player = event.getPlayer();
         String message = this.messageFormat;
         chatMessage = event.getMessage();
-        if (localChat = true) {
+        if (localChat == true) {
             if (chatMessage.startsWith("!") && player.hasPermission("chatex.chat.global")) {
                 chatMessage = chatMessage.replaceFirst("!", "");
                 message = main.getUtils().replaceColors(globalMessageFormat);
