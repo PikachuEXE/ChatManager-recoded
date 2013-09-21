@@ -26,7 +26,7 @@ public class EssentialsGroupManager implements PermissionsPlugin {
     }
 
     @Override
-    public String getPrefix(Player p, String world) {
+    public String getPrefix(Player p, String world, boolean multiPrefixes, boolean PrependPlayerPrefix) {
         AnjoPermissionsHandler handler = null;
         if (world == null) {
             handler = groupManager.getWorldsHolder().getWorldPermissionsByPlayerName(p.getName());
@@ -40,7 +40,7 @@ public class EssentialsGroupManager implements PermissionsPlugin {
     }
 
     @Override
-    public String getSuffix(Player p, String world) {
+    public String getSuffix(Player p, String world, boolean multiSuffixes, boolean PrependPlayerSuffix) {
         AnjoPermissionsHandler handler;
         if (world == null) {
             handler = groupManager.getWorldsHolder().getWorldPermissionsByPlayerName(p.getName());

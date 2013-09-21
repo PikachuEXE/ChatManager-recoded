@@ -34,11 +34,6 @@ public class Utils {
         this.main = main;
     }
 
-    public String getColoredWorldName(String world) {
-        world = world.replaceAll("&((?i)[0-9a-fk-or])", "§$1");
-        return world;
-    }
-
     public String translateColorCodes(String string, Player p) {
         if (string == null) {
             return "";
@@ -98,9 +93,14 @@ public class Utils {
     }
 
     public void updateDisplayName(Player player) {
-        player.setDisplayName(this.replaceColors(this.replacePlayerPlaceholders(player, main.getListener().optionDisplayname)));
+        player.setDisplayName(
+        		this.replaceColors(
+        				this.replacePlayerPlaceholders(
+        						player, 
+        						main.getListener().getMessageFormat())));
     }
 
+    // @return [String] Colored Message Format
     protected String replacePlayerPlaceholders(Player player, String format) {
         String worldName = player.getWorld().getName();
         String result = format;
@@ -112,13 +112,24 @@ public class Utils {
         	result = result.replace("%faction", "");
         }
         
-        result = result.replace("%prefix", this.replaceColors(main.getPlugin().getPrefix(player, player.getWorld().getName())));
-        result = result.replace("%suffix", this.replaceColors(main.getPlugin().getSuffix(player, player.getWorld().getName())));
+        result = result.replace("%prefix", this.replaceColors(main.getPlugin().getPrefix(
+        		player, 
+        		player.getWorld().getName(),
+        		main.getListener().getMultiPrefixes(),
+        		main.getListener().getPrependPlayerPrefix())));
+        result = result.replace("%suffix", this.replaceColors(main.getPlugin().getSuffix(
+        		player, 
+        		player.getWorld().getName(),
+        		main.getListener().getMultiSuffixes(),
+        		main.getListener().getPrependPlayerSuffix())));
         
-        result = result.replace("%world", this.getColoredWorldName(worldName)).replace("%player", player.getDisplayName());
+        result = result.replace("%world", this.replaceColors(worldName));
+        result = result.replace("%player", player.getDisplayName());
         result = result.replace("%group", this.replaceColors(main.getPlugin().getGroupNames(player, player.getWorld().getName())[0]));
+        
+        result = this.replaceColors(result);
 		
-        return format;
+        return result;
     }
 
     protected String replaceTime(String message) {
