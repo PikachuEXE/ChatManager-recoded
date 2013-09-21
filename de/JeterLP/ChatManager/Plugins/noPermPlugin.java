@@ -8,12 +8,12 @@ import org.bukkit.entity.Player;
 public class noPermPlugin implements PermissionsPlugin{
 
     @Override
-    public String getPrefix(Player p, String world) {
+    public String getPrefix(Player p, String world, boolean multiPrefixes, boolean PrependPlayerPrefix) {
         return "";
     }
 
     @Override
-    public String getSuffix(Player p, String world) {
+    public String getSuffix(Player p, String world, boolean multiSuffixes, boolean PrependPlayerSuffix) {
         return "";
     }
 

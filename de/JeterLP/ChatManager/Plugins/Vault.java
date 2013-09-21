@@ -9,12 +9,12 @@ import org.bukkit.entity.Player;
 public class Vault implements PermissionsPlugin {
 
     @Override
-    public String getPrefix(Player p, String world) {
+    public String getPrefix(Player p, String world, boolean multiPrefixes, boolean PrependPlayerPrefix) {
         return ChatManager.getInstance().getChat().getPlayerPrefix(world, p.getName());
     }
 
     @Override
-    public String getSuffix(Player p, String world) {
+    public String getSuffix(Player p, String world, boolean multiSuffixes, boolean PrependPlayerSuffix) {
         return ChatManager.getInstance().getChat().getPlayerSuffix(world, p.getName());
     }
 

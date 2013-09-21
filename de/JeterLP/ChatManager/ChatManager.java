@@ -2,13 +2,16 @@ package de.JeterLP.ChatManager;
 
 import de.JeterLP.ChatManager.Plugins.PermissionFactory;
 import de.JeterLP.ChatManager.Plugins.PermissionsPlugin;
-import java.io.File;
-import java.util.logging.Level;
-import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.economy.Economy;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.economy.Economy;
+
+import java.io.File;
+import java.util.logging.Level;
 
 /**
  *
@@ -65,10 +68,18 @@ public class ChatManager extends JavaPlugin {
     private void initializeConfiguration() {
         if (!new File("plugins/ChatEx/config.yml").exists()) {
             getConfig().set("enable", true);
-            getConfig().set("message-format", ChatListener.MESSAGE_FORMAT);
-            getConfig().set("global-message-format", ChatListener.GLOBAL_MESSAGE_FORMAT);
-            getConfig().set("ranged-mode", ChatListener.RANGED_MODE);
-            getConfig().set("chat-range", ChatListener.CHAT_RANGE);
+            
+            getConfig().set(ChatListener.OPTION_MESSAGE_FORMAT, ChatListener.MESSAGE_FORMAT);
+            getConfig().set(ChatListener.OPTION_GLOBAL_MESSAGE_FORMAT, ChatListener.GLOBAL_MESSAGE_FORMAT);
+            
+            getConfig().set(ChatListener.OPTION_RANGED_MODE, ChatListener.RANGED_MODE);
+            getConfig().set(ChatListener.OPTION_CHAT_RANGE, ChatListener.CHAT_RANGE);
+            
+            getConfig().set(ChatListener.OPTION_MULTI_PREFIXES, ChatListener.MULTI_PREFIXES);
+            getConfig().set(ChatListener.OPTION_MULTI_SUFFIXES, ChatListener.MULTI_SUFFIXES);
+            getConfig().set(ChatListener.OPTION_PREPEND_PLAYER_PREFIX, ChatListener.PREPEND_PLAYER_PREFIX);
+            getConfig().set(ChatListener.OPTION_PREPEND_PLAYER_SUFFIX, ChatListener.PREPEND_PLAYER_SUFFIX);
+            
             saveConfig();
         }
     }

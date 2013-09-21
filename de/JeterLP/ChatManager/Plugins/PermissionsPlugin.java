@@ -8,9 +8,9 @@ import org.bukkit.entity.Player;
  */
 public interface PermissionsPlugin {
 
-    public String getPrefix(Player p, String world);
+    public String getPrefix(Player p, String world, boolean multiPrefixes, boolean PrependPlayerPrefix);
 
-    public String getSuffix(Player p, String world);
+    public String getSuffix(Player p, String world, boolean multiSuffixes, boolean PrependPlayerSuffix);
 
     public String[] getGroupNames(Player p, String world);
 }

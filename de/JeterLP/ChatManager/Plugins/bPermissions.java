@@ -11,12 +11,12 @@ import org.bukkit.entity.Player;
 public class bPermissions implements PermissionsPlugin {
 
     @Override
-    public String getPrefix(Player p, String world) {
+    public String getPrefix(Player p, String world, boolean multiPrefixes, boolean PrependPlayerPrefix) {
         return ApiLayer.getValue(world, CalculableType.USER, p.getName(), "prefix");
     }
 
     @Override
-    public String getSuffix(Player p, String world) {
+    public String getSuffix(Player p, String world, boolean multiSuffixes, boolean PrependPlayerSuffix) {
         return ApiLayer.getValue(world, CalculableType.USER, p.getName(), "suffix");
     }
 
