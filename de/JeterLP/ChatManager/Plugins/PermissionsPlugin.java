@@ -12,5 +12,5 @@ public interface PermissionsPlugin {
 
     public String getSuffix(Player p, String world);
 
-    public String[] getGroups(Player p, String world);
+    public String[] getGroupNames(Player p, String world);
 }

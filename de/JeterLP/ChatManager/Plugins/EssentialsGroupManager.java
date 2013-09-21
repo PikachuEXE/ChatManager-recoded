@@ -54,7 +54,7 @@ public class EssentialsGroupManager implements PermissionsPlugin {
     }
 
     @Override
-    public String[] getGroups(Player p, String world) {
+    public String[] getGroupNames(Player p, String world) {
         AnjoPermissionsHandler handler;
         if (world == null) {
             handler = groupManager.getWorldsHolder().getWorldPermissionsByPlayerName(p.getName());

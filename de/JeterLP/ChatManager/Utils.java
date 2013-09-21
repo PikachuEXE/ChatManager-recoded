@@ -103,13 +103,22 @@ public class Utils {
 
     protected String replacePlayerPlaceholders(Player player, String format) {
         String worldName = player.getWorld().getName();
-        format = replaceMoney(format, player);
+        String result = format;
+        
+        result = replaceMoney(result, player);
         if (main.getHook().checkFactions()) {
-            format = format.replace("%faction", this.replaceColors(Factions.getFactionName(player)));
+        	result = result.replace("%faction", this.replaceColors(Factions.getFactionName(player)));
         } else {
-            format = format.replace("%faction", "");
+        	result = result.replace("%faction", "");
         }
-        return format.replace("%prefix", this.replaceColors(main.getPlugin().getPrefix(player, player.getWorld().getName()))).replace("%suffix", this.replaceColors(main.getPlugin().getSuffix(player, player.getWorld().getName()))).replace("%world", this.getColoredWorldName(worldName)).replace("%player", player.getDisplayName()).replace("%group", this.replaceColors(main.getPlugin().getGroups(player, player.getWorld().getName())[0]));
+        
+        result = result.replace("%prefix", this.replaceColors(main.getPlugin().getPrefix(player, player.getWorld().getName())));
+        result = result.replace("%suffix", this.replaceColors(main.getPlugin().getSuffix(player, player.getWorld().getName())));
+        
+        result = result.replace("%world", this.getColoredWorldName(worldName)).replace("%player", player.getDisplayName());
+        result = result.replace("%group", this.replaceColors(main.getPlugin().getGroupNames(player, player.getWorld().getName())[0]));
+		
+        return format;
     }
 
     protected String replaceTime(String message) {

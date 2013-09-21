@@ -18,7 +18,7 @@ public class noPermPlugin implements PermissionsPlugin{
     }
 
     @Override
-    public String[] getGroups(Player p, String world) {
+    public String[] getGroupNames(Player p, String world) {
         String[] data={""};
         return data;
     }
